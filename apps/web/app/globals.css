@@ -1,0 +1,309 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* ─── Dark mode via class ─────────────────────────────────────────── */
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Tailwind theme tokens ───────────────────────────────────────── */
+@theme inline {
+  /* shadcn semantic tokens */
+  --color-background:            var(--background);
+  --color-foreground:            var(--foreground);
+  --color-card:                  var(--card);
+  --color-card-foreground:       var(--card-foreground);
+  --color-popover:               var(--popover);
+  --color-popover-foreground:    var(--popover-foreground);
+  --color-primary:               var(--primary);
+  --color-primary-foreground:    var(--primary-foreground);
+  --color-secondary:             var(--secondary);
+  --color-secondary-foreground:  var(--secondary-foreground);
+  --color-muted:                 var(--muted);
+  --color-muted-foreground:      var(--muted-foreground);
+  --color-accent:                var(--accent);
+  --color-accent-foreground:     var(--accent-foreground);
+  --color-destructive:           var(--destructive);
+  --color-border:                var(--border);
+  --color-input:                 var(--input);
+  --color-ring:                  var(--ring);
+
+  /* sidebar */
+  --color-sidebar:                      var(--sidebar);
+  --color-sidebar-foreground:           var(--sidebar-foreground);
+  --color-sidebar-primary:              var(--sidebar-primary);
+  --color-sidebar-primary-foreground:   var(--sidebar-primary-foreground);
+  --color-sidebar-accent:               var(--sidebar-accent);
+  --color-sidebar-accent-foreground:    var(--sidebar-accent-foreground);
+  --color-sidebar-border:               var(--sidebar-border);
+  --color-sidebar-ring:                 var(--sidebar-ring);
+
+  /* charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* ── Task status tokens ── */
+  --color-status-todo:          var(--status-todo);
+  --color-status-in-progress:   var(--status-in-progress);
+  --color-status-in-review:     var(--status-in-review);
+  --color-status-done:          var(--status-done);
+  --color-status-cancelled:     var(--status-cancelled);
+  --color-status-blocked:       var(--status-blocked);
+
+  /* ── Priority tokens ── */
+  --color-priority-urgent:  var(--priority-urgent);
+  --color-priority-high:    var(--priority-high);
+  --color-priority-medium:  var(--priority-medium);
+  --color-priority-low:     var(--priority-low);
+  --color-priority-none:    var(--priority-none);
+
+  /* ── Brand palette ── */
+  --color-brand-50:  var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+
+  /* ── Surface scale ── */
+  --color-surface-0:  var(--surface-0);
+  --color-surface-1:  var(--surface-1);
+  --color-surface-2:  var(--surface-2);
+  --color-surface-3:  var(--surface-3);
+
+  /* ── Radius scale ── */
+  --radius-sm:  calc(var(--radius) * 0.5);
+  --radius-md:  calc(var(--radius) * 0.75);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-full: 9999px;
+
+  /* ── Typography ── */
+  --font-sans:    var(--font-inter);
+  --font-mono:    var(--font-geist-mono);
+  --font-heading: var(--font-inter);
+
+  /* ── Shadows ── */
+  --shadow-xs:  var(--shadow-token-xs);
+  --shadow-sm:  var(--shadow-token-sm);
+  --shadow-md:  var(--shadow-token-md);
+  --shadow-lg:  var(--shadow-token-lg);
+  --shadow-xl:  var(--shadow-token-xl);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/*  LIGHT MODE                                                         */
+/* ─────────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* ── Brand: Indigo-Violet (Linear-style) ── */
+  --brand-50:  #eef0ff;
+  --brand-100: #e0e3ff;
+  --brand-200: #c7cbfe;
+  --brand-300: #a5abfd;
+  --brand-400: #8183fa;
+  --brand-500: #6366f1;   /* primary */
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --brand-800: #3730a3;
+  --brand-900: #312e81;
+
+  /* ── shadcn semantic ── */
+  --background:         #ffffff;
+  --foreground:         #0f0f10;
+  --card:               #ffffff;
+  --card-foreground:    #0f0f10;
+  --popover:            #ffffff;
+  --popover-foreground: #0f0f10;
+  --primary:            #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary:          #f4f4f6;
+  --secondary-foreground: #0f0f10;
+  --muted:              #f4f4f6;
+  --muted-foreground:   #71717a;
+  --accent:             #eef0ff;
+  --accent-foreground:  #4338ca;
+  --destructive:        #ef4444;
+  --border:             #e4e4e7;
+  --input:              #e4e4e7;
+  --ring:               #6366f1;
+  --radius:             0.5rem;
+
+  /* ── Surface scale ── */
+  --surface-0: #ffffff;
+  --surface-1: #f9f9fb;
+  --surface-2: #f4f4f6;
+  --surface-3: #e4e4e7;
+
+  /* ── Sidebar ── */
+  --sidebar:                    #f9f9fb;
+  --sidebar-foreground:         #0f0f10;
+  --sidebar-primary:            #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent:             #eef0ff;
+  --sidebar-accent-foreground:  #4338ca;
+  --sidebar-border:             #e4e4e7;
+  --sidebar-ring:               #6366f1;
+
+  /* ── Task status ── */
+  --status-todo:        #94a3b8;
+  --status-in-progress: #6366f1;
+  --status-in-review:   #a855f7;
+  --status-done:        #22c55e;
+  --status-cancelled:   #6b7280;
+  --status-blocked:     #ef4444;
+
+  /* ── Priority ── */
+  --priority-urgent: #ef4444;
+  --priority-high:   #f97316;
+  --priority-medium: #eab308;
+  --priority-low:    #94a3b8;
+  --priority-none:   #d1d5db;
+
+  /* ── Charts ── */
+  --chart-1: #6366f1;
+  --chart-2: #22c55e;
+  --chart-3: #f97316;
+  --chart-4: #a855f7;
+  --chart-5: #06b6d4;
+
+  /* ── Shadows ── */
+  --shadow-token-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-token-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-token-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-token-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+  --shadow-token-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/*  DARK MODE                                                          */
+/* ─────────────────────────────────────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+
+  /* ── Brand ── */
+  --brand-50:  #1e1b4b;
+  --brand-100: #312e81;
+  --brand-200: #3730a3;
+  --brand-300: #4338ca;
+  --brand-400: #4f46e5;
+  --brand-500: #6366f1;
+  --brand-600: #818cf8;
+  --brand-700: #a5abfd;
+  --brand-800: #c7cbfe;
+  --brand-900: #eef0ff;
+
+  /* ── shadcn semantic ── */
+  --background:         #0c0c0e;
+  --foreground:         #f4f4f6;
+  --card:               #131316;
+  --card-foreground:    #f4f4f6;
+  --popover:            #131316;
+  --popover-foreground: #f4f4f6;
+  --primary:            #818cf8;
+  --primary-foreground: #0c0c0e;
+  --secondary:          #1c1c21;
+  --secondary-foreground: #f4f4f6;
+  --muted:              #1c1c21;
+  --muted-foreground:   #71717a;
+  --accent:             #1e1b4b;
+  --accent-foreground:  #c7cbfe;
+  --destructive:        #f87171;
+  --border:             #ffffff14;
+  --input:              #ffffff18;
+  --ring:               #818cf8;
+
+  /* ── Surface scale ── */
+  --surface-0: #0c0c0e;
+  --surface-1: #131316;
+  --surface-2: #1c1c21;
+  --surface-3: #26262e;
+
+  /* ── Sidebar ── */
+  --sidebar:                    #0f0f12;
+  --sidebar-foreground:         #f4f4f6;
+  --sidebar-primary:            #818cf8;
+  --sidebar-primary-foreground: #0c0c0e;
+  --sidebar-accent:             #1e1b4b;
+  --sidebar-accent-foreground:  #c7cbfe;
+  --sidebar-border:             #ffffff0f;
+  --sidebar-ring:               #818cf8;
+
+  /* ── Task status ── */
+  --status-todo:        #64748b;
+  --status-in-progress: #818cf8;
+  --status-in-review:   #c084fc;
+  --status-done:        #4ade80;
+  --status-cancelled:   #52525b;
+  --status-blocked:     #f87171;
+
+  /* ── Priority ── */
+  --priority-urgent: #f87171;
+  --priority-high:   #fb923c;
+  --priority-medium: #facc15;
+  --priority-low:    #64748b;
+  --priority-none:   #3f3f46;
+
+  /* ── Charts ── */
+  --chart-1: #818cf8;
+  --chart-2: #4ade80;
+  --chart-3: #fb923c;
+  --chart-4: #c084fc;
+  --chart-5: #22d3ee;
+
+  /* ── Shadows (stronger in dark) ── */
+  --shadow-token-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-token-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-token-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-token-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  --shadow-token-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/*  BASE STYLES                                                        */
+/* ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Focus visible only on keyboard nav */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* Scrollbar – minimal */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
