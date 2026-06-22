@@ -1,6 +1,5 @@
 "use client"
 
-import type { Metadata } from "next"
 import { Plus } from "lucide-react"
 
 import { FilterBar } from "@/components/tasks/filter-bar"
