@@ -30,3 +30,12 @@ export const ROLE = {
 } as const
 
 export type RoleKey = keyof typeof ROLE
+
+export const PROJECT_STATUS = {
+  active:    { label: "Active",    tw: "text-green-400",  badge: "bg-green-500/10  text-green-400  border-green-500/20"  },
+  on_hold:   { label: "On Hold",   tw: "text-yellow-400", badge: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+  completed: { label: "Completed", tw: "text-indigo-400", badge: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20" },
+  archived:  { label: "Archived",  tw: "text-zinc-400",   badge: "bg-zinc-500/10   text-zinc-400   border-zinc-500/20"   },
+} as const
+
+export type ProjectStatusKey = keyof typeof PROJECT_STATUS
