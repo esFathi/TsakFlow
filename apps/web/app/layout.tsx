@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full bg-background text-foreground antialiased">
+      <body suppressHydrationWarning className="min-h-full bg-background text-foreground antialiased">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
