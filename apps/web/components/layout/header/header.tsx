@@ -4,6 +4,7 @@ import { Search, Bell, Sun, Moon, Monitor } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAppDispatch, useAppSelector } from "@/hooks/use-app-dispatch"
 import { setTheme } from "@/store/slices/ui.slice"
+import { getInitials } from "@/store/slices/auth.slice"
 import { Breadcrumbs } from "./breadcrumbs"
 
 const THEME_ICONS = {
@@ -17,6 +18,7 @@ type Theme = keyof typeof THEME_ICONS
 export function Header() {
   const dispatch = useAppDispatch()
   const theme = useAppSelector(s => s.ui.theme)
+  const user = useAppSelector(s => s.auth.user)
 
   const cycleTheme = () => {
     const order: Theme[] = ["light", "dark", "system"]
@@ -68,8 +70,11 @@ export function Header() {
         <button
           className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-primary transition-colors hover:bg-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="User menu"
+          title={user?.name}
         >
-          <span className="text-[11px] font-semibold">AR</span>
+          <span className="text-[11px] font-semibold">
+            {user ? getInitials(user.name) : "?"}
+          </span>
         </button>
       </div>
     </header>
