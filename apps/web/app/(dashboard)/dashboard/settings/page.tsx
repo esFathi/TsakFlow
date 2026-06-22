@@ -1,5 +1,9 @@
 import type { Metadata } from "next"
+
+import { SettingsClient } from "@/components/settings/settings-client"
+
 export const metadata: Metadata = { title: "Settings" }
+
 export default function SettingsPage() {
-  return <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+  return <SettingsClient />
 }
