@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "TaskFlow Base (shared)",
+  "extends": "../../tsconfig.json"
+}
