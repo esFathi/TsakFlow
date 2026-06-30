@@ -1,6 +1,6 @@
 // Use-case: register a new user (hash password, persist, return tokens).
 
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { RegisterDto } from '../dtos/register.dto';
 import { UserRepository }
 from '../../../users/domain/repositories/user.repository';
@@ -13,15 +13,32 @@ from '../../../users/domain/entities/user.entity';
 import {
  ConflictException
 } from '@nestjs/common';
+import { INJECTION_TOKENS } from '@/core/constants/injection-tokens';
 
 @Injectable()
 export class RegisterUseCase {
 
  constructor(
-   private readonly userRepository:UserRepository,
-   private readonly passwordHasher:PasswordHasherPort,
-   private readonly tokenService:TokenServicePort,
- ){}
+
+ @Inject(
+  INJECTION_TOKENS.USER_REPOSITORY
+ )
+ private readonly userRepository:
+ UserRepository,
+
+ @Inject(
+   INJECTION_TOKENS.PASSWORD_HASHER
+ )
+ private readonly passwordHasher:
+ PasswordHasherPort,
+
+ @Inject(
+   INJECTION_TOKENS.TOKEN_SERVICE
+ )
+ private readonly tokenService:
+ TokenServicePort,
+
+){}
 
  async execute(
    dto:RegisterDto
