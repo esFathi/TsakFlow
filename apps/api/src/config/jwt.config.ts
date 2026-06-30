@@ -1,1 +1,13 @@
 // JWT config: secret and access/refresh token expiry.
+
+export default () => ({
+  accessToken: {
+    secret: process.env.JWT_ACCESS_SECRET!,
+    expiresIn: '15m',
+  },
+
+  refreshToken: {
+    secret: process.env.JWT_REFRESH_SECRET!,
+    expiresIn: '7d',
+  },
+});
