@@ -57,6 +57,8 @@ export class User {
     });
   }
 
+  // static restore()
+
   updateRefreshToken(hash: string | null) {
     this._hashedRefreshToken = hash ?? undefined;
     this._updatedAt = new Date();
