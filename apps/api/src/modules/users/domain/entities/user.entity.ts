@@ -70,6 +70,10 @@ export class User {
     return this._email;
   }
 
+  get fullName() {
+    return this._fullName
+  }
+
   get passwordHash() {
     return this._passwordHash;
   }
@@ -80,5 +84,13 @@ export class User {
 
   get hashedRefreshToken() {
     return this._hashedRefreshToken;
+  }
+
+  get createdAt() {
+    return this._createdAt
+  }
+
+  get updatedAt() {
+    return this._updatedAt
   }
 }
