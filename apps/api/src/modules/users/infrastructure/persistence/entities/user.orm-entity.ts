@@ -10,6 +10,8 @@ import {
  Index
 } from 'typeorm';
 
+import { UserRole } from '../../../domain/entities/user.entity';
+
 @Entity('users')
 export class UserOrmEntity {
 
@@ -26,8 +28,12 @@ export class UserOrmEntity {
  @Column()
  passwordHash!:string;
 
- @Column()
- role!:string;
+ @Column({
+   type:'enum',
+   enum:UserRole,
+   default:UserRole.USER
+ })
+ role!:UserRole;
 
  @Column({
    nullable:true

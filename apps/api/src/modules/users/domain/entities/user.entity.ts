@@ -57,7 +57,18 @@ export class User {
     });
   }
 
-  // static restore()
+  static restore(props: {
+    id: string;
+    email: string;
+    fullName: string;
+    passwordHash: string;
+    role: UserRole;
+    hashedRefreshToken?: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }): User {
+    return new User(props);
+  }
 
   updateRefreshToken(hash: string | null) {
     this._hashedRefreshToken = hash ?? undefined;
