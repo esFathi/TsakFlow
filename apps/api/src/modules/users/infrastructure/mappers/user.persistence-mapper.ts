@@ -28,4 +28,23 @@ export class UserPersistenceMapper {
 
  }
 
+ static toDomain(
+ orm:UserOrmEntity
+):User{
+
+ return User.restore({
+
+   id:orm.id,
+   email:orm.email,
+   fullName:orm.fullName,
+   passwordHash:orm.passwordHash,
+   role:orm.role,
+   hashedRefreshToken:
+   orm.hashedRefreshToken,
+   createdAt:orm.createdAt,
+   updatedAt:orm.updatedAt
+ });
+
+}
+
 }
