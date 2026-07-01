@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Eye, EyeOff, Loader2, Check, X } from "lucide-react"
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, Loader2, Check, X } from "lucide-react";
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 
-import { registerSchema, type RegisterFormData } from "@/lib/validations/auth"
-import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { setUser } from "@/store/slices/auth.slice"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { FormField } from "@/components/ui/form-field"
-import { cn } from "@/lib/utils"
+import { registerSchema, type RegisterFormData } from "@/lib/validations/auth";
+import { register as registerUserAction } from "@/store/slices/auth.slice";
+import { useAppDispatch } from "@/hooks/use-app-dispatch";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { FormField } from "@/components/ui/form-field";
+import { cn } from "@/lib/utils";
 
 const passwordRules = [
   { label: "At least 8 characters", test: (v: string) => v.length >= 8 },
   { label: "One uppercase letter", test: (v: string) => /[A-Z]/.test(v) },
   { label: "One number", test: (v: string) => /[0-9]/.test(v) },
-]
+];
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirm, setShowConfirm] = useState(false)
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -37,18 +37,38 @@ export default function RegisterPage() {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
-  })
+  });
 
-  const passwordValue = watch("password", "")
+  const passwordValue = watch("password", "");
 
-  const onSubmit = async (_data: RegisterFormData) => {
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    // TODO: replace with real API call — create user, then set httpOnly cookie server-side
-    dispatch(setUser({ name: _data.name, email: _data.email }))
-    document.cookie = "taskflow-token=mock-token; path=/; max-age=86400; SameSite=Lax"
-    router.push("/dashboard")
-  }
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      setIsLoading(true);
+
+      const result = await dispatch(
+        registerUserAction({
+          fullName: data.name,
+          email: data.email,
+          password: data.password,
+        }),
+      );
+
+      if (registerUserAction.fulfilled.match(result)) {
+        document.cookie = `
+        taskflow-token=${result.payload.accessToken};
+        path=/;
+        max-age=86400;
+        SameSite=Lax
+      `;
+
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-sm">
@@ -136,7 +156,7 @@ export default function RegisterPage() {
             {passwordValue.length > 0 && (
               <ul className="mt-1.5 flex flex-col gap-1">
                 {passwordRules.map((rule) => {
-                  const passed = rule.test(passwordValue)
+                  const passed = rule.test(passwordValue);
                   return (
                     <li
                       key={rule.label}
@@ -152,7 +172,7 @@ export default function RegisterPage() {
                       )}
                       {rule.label}
                     </li>
-                  )
+                  );
                 })}
               </ul>
             )}
@@ -230,5 +250,5 @@ export default function RegisterPage() {
         </Link>
       </p>
     </div>
-  )
+  );
 }
