@@ -1,87 +1,59 @@
 // Auth feature module.
 // Wires auth controller, use-cases, strategies (JWT/local) and guards.
 
-import {
- Module
-} from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
-import {
- JwtModule
-} from '@nestjs/jwt';
+import { JwtModule } from "@nestjs/jwt";
 
-import {
- AuthController
-}
-from './presentation/controllers/auth.controller';
+import { AuthController } from "./presentation/controllers/auth.controller";
 
-import {
- RegisterUseCase
-}
-from './application/use-cases/register.use-case';
+import { RegisterUseCase } from "./application/use-cases/register.use-case";
 
-import {
- BcryptPasswordHasherService
-}
-from './infrastructure/services/bcrypt-password-hasher.service';
+import { BcryptPasswordHasherService } from "./infrastructure/services/bcrypt-password-hasher.service";
 
-import {
- JwtTokenService
-}
-from './infrastructure/services/jwt-token.service';
+import { JwtTokenService } from "./infrastructure/services/jwt-token.service";
 
-import {
- JwtStrategy
-}
-from './infrastructure/strategies/jwt.strategy';
+import { JwtStrategy } from "./infrastructure/strategies/jwt.strategy";
 
-import {
- UsersModule
-}
-from '../users/users.module';
+import { UsersModule } from "../users/users.module";
 
-import {
- INJECTION_TOKENS
-}
-from '../../core/constants/injection-tokens';
+import { INJECTION_TOKENS } from "../../core/constants/injection-tokens";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
+  imports: [
+    JwtModule.registerAsync({
+      inject: [ConfigService],
 
- imports:[
-   JwtModule,
-   UsersModule
- ],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>("JWT_ACCESS_SECRET"),
 
- controllers:[
-   AuthController
- ],
+        signOptions: {
+          expiresIn: "15m",
+        },
+      }),
+    }),
+    UsersModule,
+  ],
 
- providers:[
+  controllers: [AuthController],
 
-   RegisterUseCase,
+  providers: [
+    RegisterUseCase,
 
-   JwtStrategy,
+    JwtStrategy,
 
-   {
+    {
+      provide: INJECTION_TOKENS.PASSWORD_HASHER,
 
-      provide:
-      INJECTION_TOKENS.PASSWORD_HASHER,
+      useClass: BcryptPasswordHasherService,
+    },
 
-      useClass:
-      BcryptPasswordHasherService
+    {
+      provide: INJECTION_TOKENS.TOKEN_SERVICE,
 
-   },
-
-   {
-
-      provide:
-      INJECTION_TOKENS.TOKEN_SERVICE,
-
-      useClass:
-      JwtTokenService
-
-   }
-
- ]
-
+      useClass: JwtTokenService,
+    },
+  ],
 })
-export class AuthModule{}
+export class AuthModule {}
